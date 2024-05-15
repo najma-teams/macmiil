@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+model user {
+  id         Int        @id @default(autoincrement())
+  name       String
+  user_email String     @unique
+  password   String
+  isActive   Boolean    @default(false)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  role       Role       @default(USER)
+  category   category[]
+  product    product[]
+  cart       cart? //cart to user is one to one relationship
+  order      order[]
+}
+
+model category {
+  catId    Int       @id @default(autoincrement())
+  
+  cato     String
+  image    String
+  userId   Int
+  isDelete Boolean   @default(false)
+  user     user      @relation(fields: [userId], references: [id])
+  product  product[]
+}
+
+model product {
+  id       Int        @id @default(autoincrement())
+  Name     String     @unique
+  stock    Int
+  price    Int
+  qty      Int
+  image    String
+  createAt DateTime   @default(now())
+  updateAt DateTime   @updatedAt
+  catId    Int
+  isDelete Boolean    @default(false)
+  userId   Int
+  user     user       @relation(fields: [userId], references: [id])
+  category category   @relation(fields: [catId], references: [catId])
+  cartItem cartItem[]
+}
+
+model cart {
+  id       Int        @id @default(autoincrement())
+  total Float @default(0)
+  userId   Int        @unique
+  user     user       @relation(fields: [userId], references: [id])
+  cartItem cartItem[]
+  order    order[]
+}
+
+model cartItem {
+  id        Int     @id @default(autoincrement())
+  quant     Int
+  cartId    Int
+  productId Int
+  price     Float   @default(1)
+  total     Float   @default(1)
+  product   product @relation(fields: [productId], references: [id])
+  cart      cart    @relation(fields: [cartId], references: [id])
+}
+
+model order {
+  id        Int    @id @default(autoincrement())
+  items     Json[]
+  totalpice Float
+  userId    Int
+  cartId    Int
+  cart      cart   @relation(fields: [cartId], references: [id])
+  user      user   @relation(fields: [userId], references: [id])
+}
