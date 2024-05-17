@@ -66,7 +66,7 @@ export const decodeToken = async (req:customuserRequest,res:Response , next :Nex
         // req.user = user;
         req.user = {...decode};
         next()
-        
+        console.log(decode)  
     } catch (error) {
         res.status(400).json(
             {
@@ -75,6 +75,7 @@ export const decodeToken = async (req:customuserRequest,res:Response , next :Nex
             }
         ) 
     }
+   
 }
 
 // export const authorizer = (...allowedroles:any) => {

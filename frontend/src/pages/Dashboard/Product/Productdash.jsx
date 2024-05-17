@@ -4,9 +4,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { getproductfn } from "../../../redux/slice/productSlice/getAllProduct"
-import { Button } from '@chakra-ui/react';
-import { AddCircleOutlineOutlined } from '@mui/icons-material';
-import CreateProduct from './CreateProduct';
+import { VscAdd } from "react-icons/vsc";
+
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 180 },
@@ -47,7 +46,6 @@ const Productdash = () => {
   const getproduct = useSelector((state) => state.getproduct);
 
   const da = getproduct?.data?.result
-  console.log(da)
 
 
   
@@ -85,8 +83,9 @@ const Productdash = () => {
 
 <div className='absolute bottom-[5rem] right-5  '>
 <Link to={"Createproduct"}>
-<CreateProduct/>
-
+<div className='bg-[#999b9f] rounded-[10px] p-[17px]'>
+      <VscAdd className='text-[20px] text-white' />
+    </div>
 </Link>
 </div>
 

@@ -19,14 +19,14 @@ interface productINter {
 
 export const create = async (req: customuserRequest, res: Response) => {
   try {
-    const { Name, price, stock, catId,qty } = req.body;
+    const { Name, price, catId,qty } = req.body;
     if (req.user?.role !== 'ADMIN') {
       return res.json({
         message: "Uh don't allowed!!!!!",
         isSuccess: false,
       });
     }
-    if(!Name || !price || !stock ||!catId  ) 
+    if(!Name || !price  ||!catId  ) 
         return res.status(400).json({
             isSuccess :false,
             message:'VALIDATION_ERROR'
@@ -56,7 +56,6 @@ export const create = async (req: customuserRequest, res: Response) => {
         Name,
         qty:+qty,
         price:+price,
-        stock:+stock,
         image:cloudimage.secure_url,
         catId: +catId,
         userId:+req.user?.userId!,
@@ -179,7 +178,6 @@ export const updatePro = async (req: Request, res: Response) => {
          image,
         Name,
         price,
-        stock,
       },
     });
     res.json({

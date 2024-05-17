@@ -9,12 +9,12 @@ export const createCateory = async(req:customuserRequest,res:Response)=>{
     try {
         const {Name,image, cato} = req.body
      
-        if(!req.user?.role){
-            return res.json({
-                message : "Uh don't allowed!!!!!",
-                isSuccess : false
-            })
-        }
+        // if(!req.user?.role){
+        //     return res.json({
+        //         message : "Uh don't allowed!!!!!",
+        //         isSuccess : false
+        //     })
+        // }
         if(!cato){
             return res.json({
                 message : "please set type_category",
@@ -36,7 +36,6 @@ export const createCateory = async(req:customuserRequest,res:Response)=>{
         //newcate
         const newcate = await prisma.category.create({
             data :{
-                image,
                 cato,
                 userId : req.user?.userId!
             }

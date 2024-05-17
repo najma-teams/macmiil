@@ -211,7 +211,7 @@ export const changeRole = async(req:customuserRequest,res:Response)=>{
             id : +req.params.id
          },
          data :{
-            role : req.body.role
+            role : req.body.role.toUpperCase()
          }
       })
      
@@ -222,6 +222,7 @@ export const changeRole = async(req:customuserRequest,res:Response)=>{
 
 
    } catch (error) {
+      console.log(error)
       res.json({
          message : "something wrong",
          isSuccess : false

@@ -10,7 +10,7 @@ import Dashrouter from "./components/Dashboard/Dashrouter";
 import Maneger from "./pages/Dashboard/Product/Productdash";
 import Login from "./components/login/Login";
 import Productdash from "./pages/Dashboard/Product/Productdash";
-import CreateProduct from "./pages/Dashboard/Product/CreateProduct";
+import CreateProduct from "./pages/Dashboard/Product/CreateProduct copy";
 
 
 

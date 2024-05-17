@@ -10,6 +10,8 @@ import { GetOneproductSlice } from "./slice/productSlice/Oneproduct"
 import { GetAllCartSlice } from "./slice/cart/GetAllCart"
 import { createCartslice } from "./slice/cart/createCart"
 import { GetAllCatorySlice } from "./slice/Catorey/Catorey"
+import { createProductlice } from "./slice/productSlice/CreateProduct"
+import { createCategorySlice } from "./slice/Catorey/CreateCategory"
 
 
 
@@ -25,6 +27,8 @@ export const store = configureStore({
       // medicine
       getproduct:GetproductSlice.reducer,
       getoneproduct:GetOneproductSlice.reducer,
+      createproduct:createProductlice.reducer,
+
 
      
 
@@ -39,7 +43,8 @@ export const store = configureStore({
 
 
     // catory
-    getallcatory:GetAllCatorySlice.reducer
+    getallcatory:GetAllCatorySlice.reducer,
+    createCategory:createCategorySlice.reducer
 
     },
 

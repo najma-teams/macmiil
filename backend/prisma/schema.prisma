@@ -35,7 +35,6 @@ model category {
   catId    Int       @id @default(autoincrement())
   
   cato     String
-  image    String
   userId   Int
   isDelete Boolean   @default(false)
   user     user      @relation(fields: [userId], references: [id])
@@ -45,7 +44,6 @@ model category {
 model product {
   id       Int        @id @default(autoincrement())
   Name     String     @unique
-  stock    Int
   price    Int
   qty      Int
   image    String
