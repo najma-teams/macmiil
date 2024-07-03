@@ -143,24 +143,32 @@ export const login = async(req:Request,res:Response)=>{
 
 export const updateuser = async(req:customuserRequest,res:Response)=>{
    try {
+
+      const {name,id} = req.body
+
+      const user = await prisma.user.findFirst({
+         where:{
+             id:+id,
+         },
+        
+     })
  
-      if(!req.user?.role){
-      return res.json({
-         message : "Uh u not Allowed!!!!!!",
-         isSuccess : false
-      })
-      }
+        
+          // check if the user exist
+         if(!user) return res.status(404).json({
+             issuccess:false,
+             message:'USER_NOT_FOUND'
+         })
+ 
 
-
-      const {userId} = req.params
-      const {name} = req.body
+      // const {userId} = req.params
 
       const updated = await prisma.user.update({
          where :{
-            id :parseInt(userId)
+            id :parseInt(id)
          },
           data:{
-            // name
+            name
           }
       })
        res.json({
@@ -169,6 +177,7 @@ export const updateuser = async(req:customuserRequest,res:Response)=>{
        })
 
    } catch (error) {
+      console.log(error)
       res.json({
          message : "error",
          isSuccess : false
@@ -235,7 +244,7 @@ export const getall = async(req:Request,res:Response)=>{
    try {
       const get = await prisma.user.findMany()
       res.json({
-         result : {...get},
+         result : [...get],
          isSuccess : true
       })
    } catch (error) {
@@ -243,6 +252,34 @@ export const getall = async(req:Request,res:Response)=>{
          message : "something is wrong",
          isSuccess: false
       })
+   }
+}
+export const getDetails =async(req:Request,res:Response)=>{
+   try {
+    const {id} = req.params;
+
+    const user = await prisma.user.findFirst({
+        where:{
+            id:+id,
+        }
+       
+    })
+     // check if the user exist
+    if(!user) return res.status(404).json({
+        issuccess:false,
+        message:'USER_NOT_FOUND'
+    })
+    res.json({
+        issuccess:true,
+        message:'SUCCESS',
+        user
+    })
+   } catch (error) {
+    console.log(error)
+    return res.json({
+        issuccess:false,
+        message:'FAILED_TO_GET_USER'
+    })
    }
 }
 

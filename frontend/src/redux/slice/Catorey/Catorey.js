@@ -23,7 +23,6 @@ const initialState = {
         try {
             
             const res = await axios.get(`${Url}/cate/all`);
-            console.log(res)
             return res.data
         } catch (error) {
             console.log(error)

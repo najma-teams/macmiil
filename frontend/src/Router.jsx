@@ -7,10 +7,15 @@ import Produc_page from "./pages/Produc_page";
 import Singleproduct from "./components/product/Singleproduct";
 import Cart from "./components/cart/Cart";
 import Dashrouter from "./components/Dashboard/Dashrouter";
-import Maneger from "./pages/Dashboard/Product/Productdash";
+import Maneger from "./pages/Dashboard/Product/Productall";
 import Login from "./components/login/Login";
-import Productdash from "./pages/Dashboard/Product/Productdash";
-import CreateProduct from "./pages/Dashboard/Product/CreateProduct copy";
+import Productdash from "./pages/Dashboard/Product/Productall";
+import CreateProduct from "./pages/Dashboard/Product/CreateProduct";
+import UpdateProduct from "./pages/Dashboard/Product/UpdateProduct";
+import Remove from "./pages/Dashboard/Product/Remove";
+import Alluser from "./pages/Dashboard/User/User";
+import CreateUser from "./pages/Dashboard/User/CreateUser";
+import UpdateUser from "./pages/Dashboard/User/UpdateUser";
 
 
 
@@ -69,11 +74,7 @@ export const router = createBrowserRouter([
         path:'/Dashboard',
         element:<Dashrouter/>,
         children:[
-            // {
-            //     path:'/Dashboard',
-            //     element:<Dashrouter/>
-            // },
-                  // maneger
+          
          {
             path: 'Product',
 
@@ -86,16 +87,40 @@ export const router = createBrowserRouter([
                     path:'Createproduct',
                     element: <CreateProduct/>
                 },
-                // {
-                //     path:'update/:id',
-                //     element: <Viewuser/>,
+                {
+                    path:'update/:id',
+                    element: <UpdateProduct/>,
                     
-                // },
-                // {
-                //     path:'viewmaneger/:id',
-                //     element:<Onemanegerpage/>,
+                },
+                {
+                    path:'remove/:id',
+                    element: <Remove/>,
                     
-                // }
+                },
+            ]
+        },
+        {
+            path: 'User',
+
+            children:[
+                {
+                    index: true,
+                    element: <Alluser/>
+                },
+                {
+                    path:'Createuser',
+                    element: <CreateUser/>
+                },
+                {
+                    path:'update/:id',
+                    element: <UpdateUser/>,
+                    
+                },
+                {
+                    path:'remove/:id',
+                    element: <Remove/>,
+                    
+                },
             ]
         }
         ]

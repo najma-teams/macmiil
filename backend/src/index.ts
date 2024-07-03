@@ -4,6 +4,8 @@ import userRouter from './routes/UserRouter'
 import cateRouter from './routes/CategoryRoute'
 import proRouter from './routes/productRouter'
 import cartRouter from './routes/CartRouter'
+import OrderRouter from './routes/OrderRoute'
+import SummaryRouter from './routes/SummaryRouter'
 import cors from 'cors';
 
 
@@ -37,6 +39,14 @@ app.use('/api/pro',proRouter)
 //cart
 
 app.use('/api/cart',cartRouter)
+
+// order
+
+app.use('/api/order',OrderRouter)
+
+// summary
+
+app.use('/api/summary',SummaryRouter)
 
 
 app.listen(port, ()=> console.log(`server start On ${port}`))

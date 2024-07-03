@@ -23,7 +23,7 @@ const Sidebar = () => {
  const menu = [
     {name:"Dashboard",Link:'Maindashboard',icon:BiSolidDashboard},
     {name:"Product",Link:'Product',icon:AiOutlineUserAdd},
-    {name:"USERS",Link:'USERS',icon:FiUsers},
+    {name:"User",Link:'User',icon:FiUsers},
   ]
   // const [anchorEl, setAnchorEl] = (null);
   // const openn = Boolean(anchorEl);

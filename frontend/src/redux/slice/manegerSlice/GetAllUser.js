@@ -21,7 +21,7 @@ const initialState = {
     'get/alluser', 
     async(_,{rejectWithValue}) =>{
         try {
-            const res = await axios.get(`${Url}/maneger/getall`);
+            const res = await axios.get(`${Url}/user/all`);
             return res.data
         } catch (error) {
             if (error instanceof AxiosError)

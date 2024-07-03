@@ -3,17 +3,10 @@ import axios, { AxiosError } from 'axios';
 import { Url, errorMsg } from '../../interfaces';
 
 
-interface users{
-    id: number,
-    FullName: string,
-    Email: string,
-    Password: number,
-    role: string
-    createdAt: Date
-}
+
 
 const initialState = {
-    data: {}as users,
+    data: {},
     isLoading: false,
     isError: false,
     isSuccess: false,
@@ -24,16 +17,17 @@ const initialState = {
 
   // async thunk function
 
-export const getonemaneger = createAsyncThunk(
-    'get/post',
-    async (data:users, { rejectWithValue }) => {
+export const getoneuserfn = createAsyncThunk(
+    'get/user',
+    async (id, { rejectWithValue }) => {
       try {
         const res = await axios.get(
-          `${Url}/maneger/getone/${data.id}`
+          `${Url}/user/getuser/${id}`
         );
   
         return res.data;
       } catch (error) {
+        console.log(error)
         if (error instanceof AxiosError)
         return rejectWithValue(error.response?.data.message || errorMsg)
     return rejectWithValue(errorMsg)
@@ -51,16 +45,16 @@ export const getonemaneger = createAsyncThunk(
     reducers:{},
     initialState,
     extraReducers:(builder)=>{
-        builder.addCase(getonemaneger.pending,() =>({
+        builder.addCase(getoneuserfn.pending,() =>({
             ...initialState,
             isLoading :true
         }));
-        builder.addCase(getonemaneger.fulfilled,(_,action) =>({
+        builder.addCase(getoneuserfn.fulfilled,(_,action) =>({
             ...initialState,
             isSuccess :true,
             data:action.payload
         }));
-        builder.addCase(getonemaneger.rejected,(_,action) =>({
+        builder.addCase(getoneuserfn.rejected,(_,action) =>({
             ...initialState,
             isError :true,
             errorMsg:String(action.payload)

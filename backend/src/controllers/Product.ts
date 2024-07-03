@@ -9,6 +9,7 @@ const prisma = new PrismaClient();
 
 interface productINter {
   price: number;
+  qty: number;
   stock: number;
   image: string;
   Name: string;
@@ -145,22 +146,18 @@ export const getone = async (req: Request, res: Response) => {
 
 export const updatePro = async (req: Request, res: Response) => {
   try {
-    const { error, value } = proupdateSchema.validate(req.body);
+ 
 
-    if (error) {
-      return res.json({
-        error: error.details[0].message,
-      });
-    }
-
-    const { image, Name, price, stock } = value as productINter;
+    const { image, Name, price, catId,qty,id } = req.body;
 
     const checkId = await prisma.product.findFirst({
       where: {
-        id: +req.params.id,
+        id: +id,
         isDelete: false,
       },
+      
     });
+    
     if (!checkId) {
       return res.json({
         message: "Product is Not axist",
@@ -169,15 +166,22 @@ export const updatePro = async (req: Request, res: Response) => {
     }
 
     //updated
+    const file  = req.file
+
+    const cloudimage = await cloudinary.uploader.upload(file?.path!)
 
     const updated = await prisma.product.update({
       where: {
-        id: +req.params.id,
+        id: +req.body.id,
       },
       data: {
-         image,
+        // Name:req.body.Name,
         Name,
-        price,
+        qty:+qty,
+        price:+price,
+        image:cloudimage.secure_url,
+        catId: +catId,
+
       },
     });
     res.json({
@@ -185,6 +189,7 @@ export const updatePro = async (req: Request, res: Response) => {
       isSuccess: true,
     });
   } catch (error) {
+    console.log(error)
     res.json({
       message: "something is wrong",
       isSuccess: false,

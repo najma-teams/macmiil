@@ -20,7 +20,9 @@ export const addToCart = async (req: customuserRequest, res: Response) => {
   try {
     
     const userId = req.user?.userId
-    const CartItem = req.body
+    const {CartItem} = req.body
+
+    const total =  CartItem?.reduce((total: number, item: any) => total + item.price * item.quant, 0)
 
     let userCart = await prisma.cart.findFirst({
       where: {
@@ -35,11 +37,11 @@ export const addToCart = async (req: customuserRequest, res: Response) => {
       })
     }
 
-console.log('cartItems length:', CartItem.length);
 
 
-    for (let i = 0; i < CartItem.length; i++) {
-      console.log('Loop iteration:', i);
+    for (let i = 0; i < CartItem?.length; i++) {
+
+   
 
       const findProduct = await prisma.product.findFirst({
         where:{
@@ -47,41 +49,43 @@ console.log('cartItems length:', CartItem.length);
         }
         
       })
-      console.log('findProduct')
   
       if(!findProduct){
         return res.status(404).json({
-          message : "not found product",
+          message : 'The Item not found product',
           isSuccess:false
         })
       }
 
-      if(findProduct){
-        return res.status(404).json({
-          message : "not found product",
-          isSuccess:false
-        })
-      }
 
     }
 
 
-console.log("ffff")
 
-    // const createCart = await prisma.cart.create({
-    //   data: {
-    //     cartItem: {
-    //       create: cartItems?.map((item:any) => ({
-    //         quant: +item.quant,
-    //         productId: { connect: { id: item.productId } },
-    //         price: +item.price!,
-    //         total: +(item.price * item.quant),
-    //       })),
-    //     },
-    //     total: cartItems.reduce((total: number, item: any) => total + item.price * item.quant, 0),
-    //     userId:req.user?.userId !,
-    //   },
-    // });
+    const createCart = await prisma.cart.create({
+      data: {
+        cartItem: {
+          create: CartItem?.map((item:any) => ({
+            quant: +item.quant,
+            product: { connect: { id: item.productId } },
+            price: +item.price!,
+            total: +(item.price * item.quant),
+          })),
+        },
+        total:total,
+        userId:req.user?.userId!,
+      },
+      include:{
+        cartItem:{
+          select:{
+            id:true,
+            quant:true,
+            price:true,
+            productId:true
+          }
+        }
+      }
+    });
 
    
 
@@ -89,7 +93,7 @@ console.log("ffff")
 
     res.status(200).json({
       IsSuccess: true,
-      // result: createCart,
+      result: createCart,
     })
   } catch (error) {
     console.log(error)
@@ -108,7 +112,7 @@ export const getallcart = async (req: customuserRequest, res: Response) => {
     const userId = req.user?.userId
 
 
-    const all = await prisma.cart.findFirst({
+    const all = await prisma.cart.findMany({
 
       where:{
         userId:userId

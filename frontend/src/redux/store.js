@@ -12,6 +12,12 @@ import { createCartslice } from "./slice/cart/createCart"
 import { GetAllCatorySlice } from "./slice/Catorey/Catorey"
 import { createProductlice } from "./slice/productSlice/CreateProduct"
 import { createCategorySlice } from "./slice/Catorey/CreateCategory"
+import { UpdateProductlice } from "./slice/productSlice/UpdateProduct"
+import { RemoveProductlice } from "./slice/productSlice/Remove"
+import { GetAllUserSlice } from "./slice/manegerSlice/GetAllUser"
+import { createUserSlice } from "./slice/manegerSlice/Register"
+import { UpdateUserSlice } from "./slice/manegerSlice/update"
+import { GetOneUserSlice } from "./slice/manegerSlice/OneUser"
 
 
 
@@ -28,6 +34,8 @@ export const store = configureStore({
       getproduct:GetproductSlice.reducer,
       getoneproduct:GetOneproductSlice.reducer,
       createproduct:createProductlice.reducer,
+      updateproduct:UpdateProductlice.reducer,
+      removeproduct:RemoveProductlice.reducer,
 
 
      
@@ -35,6 +43,11 @@ export const store = configureStore({
     //  user
     signup: signUpSlice.reducer,
     login: signInSlice.reducer,
+    getAllUser:GetAllUserSlice.reducer,
+    createUser:createUserSlice.reducer,
+    updateUser:UpdateUserSlice.reducer,
+    GetUser:GetOneUserSlice.reducer,
+
 
     // cart
 

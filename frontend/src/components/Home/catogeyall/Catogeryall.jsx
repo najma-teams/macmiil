@@ -27,7 +27,6 @@ const Catogeryall = () => {
   dispatch(getAllCatoryfn());
 }, []);
 
- console.log(getallcatory)
 
   return (
     <div className="m-10 bg-[#fcf9f9]">

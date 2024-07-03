@@ -24,7 +24,6 @@ const Login = () => {
         password: values.password,
       };
       dispatch(signInFn(data));
-      console.log(data);
     },
     validationSchema: yup.object({
       user_email: yup.string().email("please add valid email ").required(),

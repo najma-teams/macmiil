@@ -17,9 +17,9 @@ const initialState = {
 
 
 
-  export const manegerfn = createAsyncThunk("maneger/new", async (data,{rejectWithValue}) =>{
+  export const createUserFn = createAsyncThunk("user/new", async (data,{rejectWithValue}) =>{
     try {
-        const res = await axios.post(`${Url}/maneger/create`,data)
+        const res = await axios.post(`${Url}/user/register`,data)
         localStorage.setItem("userData",JSON.stringify(res.data))
         // console.log(res)
         return res.data
@@ -33,29 +33,29 @@ const initialState = {
   })
 
 
-  export const manegerSlice = createSlice({
-    name:"maneger",
+  export const createUserSlice = createSlice({
+    name:"user",
     reducers:{
         reset : () => initialState
     },
     initialState,
     extraReducers: (builder)=>{
-        builder.addCase(manegerfn.pending,()=>({
+        builder.addCase(createUserFn.pending,()=>({
             ...initialState,
             isLoading:true
         }))
-        builder.addCase(manegerfn.fulfilled,(_,action)=>({
+        builder.addCase(createUserFn.fulfilled,(_,action)=>({
             ...initialState,
             isSuccess:true,
             data : action.payload 
 
         }))
-        builder.addCase(manegerfn.rejected,(_,action)=>({
+        builder.addCase(createUserFn.rejected,(_,action)=>({
             ...initialState,
             isError:true,
-            errorMsg : String(action.payload)
+            errorMsg :action.payload
         }))
     }
 })
 
-export const {reset} = manegerSlice.actions
+export const {reset} = createUserSlice.actions

@@ -41,7 +41,7 @@ export const getoneproductfn = createAsyncThunk(
 
 
   export const GetOneproductSlice = createSlice({
-    name:"getone user",
+    name:"getone product",
     reducers:{},
     initialState,
     extraReducers:(builder)=>{

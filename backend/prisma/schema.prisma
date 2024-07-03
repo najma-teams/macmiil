@@ -16,6 +16,17 @@ enum Role {
   SUPER_ADMIN
 }
 
+enum PaymentType {
+  Pending
+  Paid
+}
+
+enum Payment {
+  Telesom
+  Edahab
+  Others
+}
+
 model user {
   id         Int        @id @default(autoincrement())
   name       String
@@ -27,13 +38,13 @@ model user {
   role       Role       @default(USER)
   category   category[]
   product    product[]
-  cart       cart? //cart to user is one to one relationship
   order      order[]
+  cart       cart[]
 }
 
 model category {
-  catId    Int       @id @default(autoincrement())
-  
+  catId Int @id @default(autoincrement())
+
   cato     String
   userId   Int
   isDelete Boolean   @default(false)
@@ -59,30 +70,43 @@ model product {
 
 model cart {
   id       Int        @id @default(autoincrement())
-  total Float @default(0)
-  userId   Int        @unique
+  total    Float      @default(0)
+  userId   Int
   user     user       @relation(fields: [userId], references: [id])
   cartItem cartItem[]
   order    order[]
 }
 
 model cartItem {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   quant     Int
   cartId    Int
   productId Int
-  price     Float   @default(1)
-  total     Float   @default(1)
-  product   product @relation(fields: [productId], references: [id])
-  cart      cart    @relation(fields: [cartId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  price     Float    @default(1)
+  total     Float    @default(1)
+  product   product  @relation(fields: [productId], references: [id])
+  cart      cart     @relation(fields: [cartId], references: [id])
 }
 
 model order {
-  id        Int    @id @default(autoincrement())
-  items     Json[]
-  totalpice Float
-  userId    Int
-  cartId    Int
-  cart      cart   @relation(fields: [cartId], references: [id])
-  user      user   @relation(fields: [userId], references: [id])
+  id       Int         @id @default(autoincrement())
+  Name     String
+  location String
+  phone    String
+  Status   PaymentType @default(Pending)
+  Account  Payment
+  userId   Int
+  cartId   Int
+  cart     cart        @relation(fields: [cartId], references: [id])
+  user     user        @relation(fields: [userId], references: [id])
+}
+
+model summary {
+  id        Int      @id @default(autoincrement())
+  name      String
+  date      DateTime @default(now())
+  createdat DateTime @default(now())
+  updatedat DateTime @updatedAt
 }
